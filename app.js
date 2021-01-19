@@ -2,6 +2,9 @@ const express = require("express");
 const app = express();
 const path = require('path');
 const fs = require('fs');
+const bodyParser = require('body-parser')
+
+const MongoClient = require('mongodb').MongoClient;
 
 
 //Logger Middleware
@@ -23,8 +26,44 @@ app.use(function(req, res, next) {
     else next();
     });
     });
-    
 
+//connection to Mongodatabase
+let db;
+MongoClient.connect('mongodb+srv://JV284:JV1198@coursework2.ddgg2.mongodb.net/webstore?retryWrites=true&w=majority/'
+, (err, Client) => {
+db = Client.db ('webstore')
+})
+
+
+
+
+//GET mongo db collection names
+app.use(express.json());
+
+app.param('collectionName', (req, res, next, collectionName) =>
+{
+    req.collection = db.collection(collectionName);
+    return next();
+})
+
+
+ //GET routes
+
+ app.get('/', (req, res, next ) =>
+ {
+     res.send('Select a collection, For example /Lessons ')
+ })
+
+ 
+//GET Route that returns all lessons
+app.get('/lessons', (req, res) => {
+    db.collection('Lessons').find().toArray((e, results) => {
+        if (e) return next(e)
+        res.send(results) })
+    
+  })
+
+  
 app.listen(3000, () => {
     console.log("app listens on port 3000");
 });
