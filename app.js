@@ -29,7 +29,7 @@ app.use(function(req, res, next) {
 
 //connection to Mongodatabase
 let db;
-MongoClient.connect('mongodb+srv://JV284:JV1198@coursework2.ddgg2.mongodb.net/webstore?retryWrites=true&w=majority/'
+MongoClient.connect('mongodb+srv://JV284:JV1198@coursework2.ddgg2.mongodb.net/webstore?retryWrites=true/'
 , (err, Client) => {
 db = Client.db ('webstore')
 })
@@ -61,6 +61,15 @@ app.get('/lessons', (req, res) => {
         if (e) return next(e)
         res.send(results) })
     
+  })
+
+  //Post To order
+
+  app.post('/order', (req, res, next) => { //add next
+      db.collection('order').insertOne(req.body, (e, results) =>
+      { if (e) return next (e)
+      res.send(results.ops)
+  })
   })
 
   
