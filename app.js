@@ -6,6 +6,9 @@ const bodyParser = require('body-parser')
 
 const MongoClient = require('mongodb').MongoClient;
 
+const ObjectID = require('mongodb').ObjectID;
+
+
 
 //Logger Middleware
 app.use(function(request,response, next){
@@ -65,12 +68,26 @@ app.get('/lessons', (req, res) => {
 
   //Post To order
 
-  app.post('/order', (req, res, next) => { //add next
+  app.post('/order', (req, res, next) => { 
       db.collection('order').insertOne(req.body, (e, results) =>
       { if (e) return next (e)
       res.send(results.ops)
   })
   })
+
+  //Put to update spaces
+
+  app.put('/collection/:collectionName/:id'
+, (req, res, next) => { 
+req.collection.update(
+{_id: new ObjectID(req.params.id)},
+{$set: req.body},
+{safe: true, multi: false},
+(e, result) => {
+if (e) return next(e)
+res.send((result.result.n === 1) ? {msg: 'success'} : {msg: 'error'})
+})
+})
 
   
 app.listen(3000, () => {
