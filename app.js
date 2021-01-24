@@ -59,7 +59,7 @@ app.param('collectionName', (req, res, next, collectionName) =>
 
  
 //GET Route that returns all lessons
-app.get('/lessons', (req, res) => {
+app.get('/lessons', (req, res, next) => {
     db.collection('Lessons').find().toArray((e, results) => {
         if (e) return next(e)
         res.send(results) })
@@ -90,6 +90,6 @@ res.send((result.result.n === 1) ? {msg: 'success'} : {msg: 'error'})
 })
 
   
-app.listen(3000, () => {
-    console.log("app listens on port 3000");
-});
+
+const port = process.env.PORT || 3000
+app.listen(port)
