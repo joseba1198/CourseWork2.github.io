@@ -30,6 +30,12 @@ app.use(function(req, res, next) {
     });
     });
 
+    app.use(function(req, res, next) {
+         res.header("Access-Control-Allow-Origin", "*");
+         res.header("Access-Control-Allow-Headers", "*");
+        next();
+        });
+
 //connection to Mongodatabase
 let db;
 MongoClient.connect('mongodb+srv://JV284:JV1198@coursework2.ddgg2.mongodb.net/webstore?retryWrites=true/'
