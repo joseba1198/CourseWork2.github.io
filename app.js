@@ -84,6 +84,7 @@ res.send(result)
   //Post To order
 
   app.post('/order', (req, res, next) => { 
+      console.log('order');
       db.collection('order').insertOne(
         req.body , (e, results) =>
       { if (e) return next (e)
