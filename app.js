@@ -71,15 +71,26 @@ app.get('/lessons', (req, res, next) => {
         res.send(results) })
     
   })
+//Get one lesson
+  app.get('/:collectionName/:id'
+, (req, res, next) => {
+req.collection.findOne({ _id: new ObjectID(req.params.id) }, (e, result) => {
+if (e) return next(e)
+res.send(result)
+})
+})
 
   //Post To order
 
   app.post('/order', (req, res, next) => { 
-      db.collection('order').insertOne(req.body, (e, results) =>
+      db.collection('order').insertOne(
+        req.body , (e, results) =>
       { if (e) return next (e)
       res.send(results.ops)
   })
   })
+   //update one
+
 
   //Put to update spaces
 
