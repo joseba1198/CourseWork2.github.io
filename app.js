@@ -104,7 +104,7 @@ req.collection.update(
 (e, result) => {
 if (e) return next(e)
 console.log( result.result.n);
-res.send((result.result.n === 0) ? {msg: 'success'} : {msg: 'error'})
+res.send((result.result.n === 2) ? {msg: 'success'} : {msg: 'error'})
 })
 })
 
