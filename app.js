@@ -96,6 +96,7 @@ res.send(result)
 
   app.put('/collection/:collectionName/:id'
 , (req, res, next) => { 
+    console.log(JSON.stringify(req.body));
 req.collection.update(
 {_id: new ObjectID(req.params.id)},
 {$set: req.body},
