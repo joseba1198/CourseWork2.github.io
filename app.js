@@ -33,6 +33,7 @@ app.use(function(req, res, next) {
     app.use(function(req, res, next) {
          res.header("Access-Control-Allow-Origin", "*");
          res.header("Access-Control-Allow-Headers", "*");
+         res.header("Access-Control-Allow-Methods", "*");
         next();
         });
 
@@ -72,7 +73,7 @@ app.get('/lessons', (req, res, next) => {
     
   })
 //Get one lesson
-  app.get('/:collectionName/:id'
+  app.get('/collection/:collectionName/:id'
 , (req, res, next) => {
 req.collection.findOne({ _id: new ObjectID(req.params.id) }, (e, result) => {
 if (e) return next(e)
@@ -89,9 +90,7 @@ res.send(result)
       res.send(results.ops)
   })
   })
-   //update one
-
-
+  
   //Put to update spaces
 
   app.put('/collection/:collectionName/:id'
